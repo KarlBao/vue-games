@@ -1,6 +1,6 @@
-# blendoku
+# Vue games
 
-> A Vue.js project
+> 基于Vue-cli魔改的多页面应用，尝试用组件化写一些交互游戏
 
 ## Build Setup
 
@@ -8,10 +8,13 @@
 # install dependencies
 npm install
 
+# create new project
+npm run create -- [projectName]
+
 # serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
+# build for production with minification (暂时还未改造)
 npm run build
 
 # build for production and view the bundle analyzer report
