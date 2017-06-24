@@ -1,0 +1,8 @@
+{
+  "name": "#{name}",
+  "title": "#{name}",
+  "author": "Karl",
+  "entry": "index.js",
+  "template": "index.jade",
+  "distPath": "index.html"
+}

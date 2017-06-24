@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .project-link {
+        display: inline-block;
+        vertical-align: middle;
+        width: 250px;
+        height: 130px;
+        border-radius: 5px;
+        margin-left: 20px;
+        margin-top: 20px;
+        background-image: -webkit-gradient(linear, left top, right bottom, from(#00fff3), to(#00ffdc));
+        background-image: -webkit-linear-gradient(left top, #00fff3, #00ffdc);
+        background-image: -moz-linear-gradient(left top, #00fff3, #00ffdc);
+        background-image: linear-gradient(to right bottom, #00fff3, #00ffdc);
+        color: #555;
+        font-size: 25px;
+        text-decoration: none;
+        text-align: center;
+      }
+      .project-link:before {
+        content: '';
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <% for (var name in htmlWebpackPlugin.options.availableProjects) { %>
+        <a class="project-link" href="<%=htmlWebpackPlugin.options.availableProjects[name].filename %>">
+          <%= name %>
+        </a>
+      <% } %>
+    </div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "blendoku",
+  "title": "Blendoku",
+  "author": "Karl",
+  "entry": "index.js",
+  "template": "index.jade",
+  "distPath": "index.html"
+}
