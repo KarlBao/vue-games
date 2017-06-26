@@ -70,26 +70,3 @@ exports.styleLoaders = function (options) {
   }
   return output
 }
-
-// 
-exports.getProjects = function () {
-  var blacklist = ['.DS_Store', 'common'] // 黑名单中的项目不会被获取
-  var projects = []
-  var srcPath = path.resolve(__dirname, '../src')
-
-  var dirs = fs.readdirSync(srcPath)
-  dirs.forEach(dirName => {
-    if (blacklist.indexOf(dirName) > -1) {
-      return
-    }
-    var dirPath = `${srcPath}/${dirName}`
-    if (isDir(dirPath)) {
-      projects.push(dirPath)
-    }
-  })
-  return projects
-}
-
-function isDir (path) {
-  return fs.lstatSync(path).isDirectory()
-}

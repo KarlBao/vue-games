@@ -8,7 +8,7 @@ function resolve (dir) {
 }
 
 var webpackBaseConfig = {
-  entry: {}, // app: './src/main.js'
+  entry: config.base.entry, // app: './src/main.js'
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -71,12 +71,5 @@ var webpackBaseConfig = {
     ]
   }
 }
-
-utils.getProjects().forEach(project => {
-  var projectJSON = require(project + '/project.json')
-  var name = projectJSON.name
-  var entry = project + '/' + projectJSON.entry
-  webpackBaseConfig.entry[name] = entry
-})
 
 module.exports = webpackBaseConfig
