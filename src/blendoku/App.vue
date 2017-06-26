@@ -4,6 +4,12 @@
     blockList(:blocks="resultBlocks", group="resultList")
 </template>
 
+<style lang="stylus">
+@import 'index.styl'
+body
+  background-color: #000
+</style>
+
 <script>
 import EventBus from '@/common/components/EventBus'
 import BlockList from './components/block-list'
@@ -180,8 +186,3 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@import 'index.styl'
-body
-  background-color: #000
-</style>
