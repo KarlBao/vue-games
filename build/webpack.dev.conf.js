@@ -42,7 +42,7 @@ Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
 // 配置入口文件
 plugins.push(new HtmlWebpackPlugin({
   filename: 'index.html',
-  template: path.resolve(__dirname, '../index.html'),
+  template: path.resolve(__dirname, '../index.jade'),
   inject: true,
   availableProjects: config.base.htmlWebpackPluginConfig,
   chunks: []
