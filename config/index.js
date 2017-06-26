@@ -1,9 +1,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+var fs = require('fs')
 
-module.exports = {
+var config = {
+  base: {
+    entry: {}, // 项目入口配置，对应 webpack 中的 entry.
+    htmlWebpackPluginConfig: {} // 对应 webpack 中的 htmlWebpackPlugin 配置
+  },
   build: {
-    env: require('./prod.env'),
+    env: require('./env/prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -22,7 +27,7 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
-    env: require('./dev.env'),
+    env: require('./env/dev.env'),
     port: 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
@@ -36,3 +41,33 @@ module.exports = {
     cssSourceMap: false
   }
 }
+
+var blacklist = ['.DS_Store', 'common'] // 黑名单中的项目不会被获取
+var srcPath = path.resolve(__dirname, '../src')
+var dirs = fs.readdirSync(srcPath)
+
+dirs.forEach(dirName => {
+  if (blacklist.indexOf(dirName) > -1) {
+    return
+  }
+  var dirPath = `${srcPath}/${dirName}`
+  
+  if (!fs.lstatSync(dirPath).isDirectory()) {
+    return
+  }
+  
+  var project = require(`${dirPath}/project.json`)
+
+  config.base.entry[project.name] = `${dirPath}/${project.entry}`
+
+  config.base.htmlWebpackPluginConfig[project.name] = {
+    title: project.title,
+    filename: `${project.name}/${project.distPath}`,
+    template: `${dirPath}/${project.template}`,
+    inject: true
+  }
+})
+
+module.exports = config
+
+

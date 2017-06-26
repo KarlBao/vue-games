@@ -1,10 +1,8 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>
-      Vue games
-    </title>
-    <style>
+html
+  head
+    meta(charset="utf-8")
+    title Vue games
+    style.
       body {
         margin: 0;
       }
@@ -31,16 +29,8 @@
         display: inline-block;
         vertical-align: middle;
       }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <% for (var name in htmlWebpackPlugin.options.availableProjects) { %>
-        <a class="project-link" href="<%=htmlWebpackPlugin.options.availableProjects[name].filename %>">
-          <%= name %>
-        </a>
-      <% } %>
-    </div>
-    <!-- built files will be auto injected -->
-  </body>
-</html>
+
+  body
+    div#app
+      each config, name in htmlWebpackPlugin.options.availableProjects
+        a.project-link(href="#{config.filename}") #{name}

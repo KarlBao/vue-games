@@ -22,24 +22,18 @@ var plugins = [
   new FriendlyErrorsPlugin()
 ]
 
-var projects = utils.getProjects()
-var HtmlWebpackPluginConfigs = {}
-
 // 配置项目文件
-projects.forEach(project => {
-  var projectJSON = require(project + '/project.json')
-  var name = projectJSON.name
+Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
+  var pluginConfig = config.base.htmlWebpackPluginConfig[name]
 
   // 配置生成的html文件，定义路径等
   var conf = {
-    title: projectJSON.title,
-    filename: name + '.html',
-    template: project + '/' + projectJSON.template, //模板路径
-    inject: true,
+    title: pluginConfig.title,
+    filename: pluginConfig.filename,
+    template: pluginConfig.template, //模板路径
+    inject: pluginConfig.inject,
     chunks: [name]
   }
-
-  HtmlWebpackPluginConfigs[name] = conf
 
   // 配置并插入多个htmlWebpackPlugin
   plugins.push(new HtmlWebpackPlugin(conf))
@@ -48,9 +42,9 @@ projects.forEach(project => {
 // 配置入口文件
 plugins.push(new HtmlWebpackPlugin({
   filename: 'index.html',
-  template: path.resolve(__dirname, '../index.html'),
+  template: path.resolve(__dirname, '../index.jade'),
   inject: true,
-  availableProjects: HtmlWebpackPluginConfigs,
+  availableProjects: config.base.htmlWebpackPluginConfig,
   chunks: []
 }))
 

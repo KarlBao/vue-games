@@ -49,20 +49,20 @@ var webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: config.build.index,
-      template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: config.build.index,
+    //   template: 'index.html',
+    //   inject: true,
+    //   minify: {
+    //     removeComments: true,
+    //     collapseWhitespace: true,
+    //     removeAttributeQuotes: true
+    //     // more options:
+    //     // https://github.com/kangax/html-minifier#options-quick-reference
+    //   },
+    //   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    //   chunksSortMode: 'dependency'
+    // }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
@@ -93,6 +93,49 @@ var webpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
+
+// 配置项目文件
+Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
+  var pluginConfig = config.base.htmlWebpackPluginConfig[name]
+  // 配置生成的html文件，定义路径等
+  var conf = {
+    title: pluginConfig.title,
+    filename: pluginConfig.filename,
+    template: pluginConfig.template, //模板路径
+    inject: pluginConfig.inject,
+    chunks: [name],
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true
+      // more options:
+      // https://github.com/kangax/html-minifier#options-quick-reference
+    },
+    // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    chunksSortMode: 'dependency'
+  }
+
+  // 配置并插入多个htmlWebpackPlugin
+  webpackConfig.plugins.push(new HtmlWebpackPlugin(conf))
+})
+
+// 配置入口文件
+webpackConfig.plugins.push(new HtmlWebpackPlugin({
+  filename: 'index.html',
+  template: path.resolve(__dirname, '../index.html'),
+  inject: true,
+  availableProjects: config.base.htmlWebpackPluginConfig,
+  chunks: [],
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+    // more options:
+    // https://github.com/kangax/html-minifier#options-quick-reference
+  },
+  // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+  chunksSortMode: 'dependency'
+}))
 
 if (config.build.productionGzip) {
   var CompressionWebpackPlugin = require('compression-webpack-plugin')
