@@ -1,6 +1,6 @@
 <template lang="jade">
   div.block-list
-    blockItem(v-for="block in list", :key="block.key", :rgb="block.rgb", :coord="block.coord", :group="group")
+    color-block(v-for="block in list", :key="block.key", :rgb="block.rgb", :coord="block.coord", :group="group")
 </template>
 
 <style lang="stylus" scoped>
@@ -9,7 +9,7 @@
 </style>
 
 <script>
-  import BlockItem from './block'
+  import ColorBlock from './block'
   export default {
     props: {
       group: {
@@ -31,7 +31,7 @@
       }
     },
     components: {
-      BlockItem
+      ColorBlock
     },
     mounted () {
       this.setList()
