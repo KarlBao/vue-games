@@ -25,7 +25,7 @@ var plugins = [
 // 配置项目文件
 Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
   var pluginConfig = config.base.htmlWebpackPluginConfig[name]
-  console.log(pluginConfig)
+
   // 配置生成的html文件，定义路径等
   var conf = {
     title: pluginConfig.title,
