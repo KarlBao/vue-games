@@ -13,7 +13,7 @@ body
 <script>
 import EventBus from '@/common/components/EventBus'
 import BlockList from './components/block-list'
-
+import io from 'socket.io-client'
 export default {
   name: 'app',
   data () {
@@ -52,6 +52,7 @@ export default {
     this.orderedBlocks = this.generateGradientBlocks(this.num)
     this.waitingBlocks = this.shuffle(this.orderedBlocks)
     this.resultBlocks = this.generateEmptyArr(this.num)
+    io('http://localhost:3000/demo')
   },
   methods: {
     switchBlocks () {
