@@ -6,7 +6,7 @@
 
 <script>
 import Hello from './components/Hello'
-import socket from './service/socket'
+import { socket } from '@/common/service/socket'
 
 export default {
   name: 'app',
