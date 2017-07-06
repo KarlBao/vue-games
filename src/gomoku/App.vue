@@ -1,17 +1,19 @@
 <template lang="jade">
   div#app
-    img(src="./assets/logo.png")
-    hello
+    chess-board(
+      :num-of-rows="10",
+      :num-of-cols="10"
+    )
 </template>
 
 <script>
-import Hello from './components/Hello'
 import { socket } from '@/common/service/socket'
+import ChessBoard from './components/chess-board'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    ChessBoard
   },
   mounted () {
     socket.emit('sayhi')

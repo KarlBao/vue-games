@@ -8,6 +8,7 @@ export function startSocket (namespace) {
   if (socket === null) {
     socket = io(`${host}/${namespace}`)
   }
+  return socket
 }
 
 // 必须在socket开启后使用
