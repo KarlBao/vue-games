@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { socket } from '@/common/service/socket'
 import ChessBoard from './components/chess-board'
 
 export default {
@@ -16,8 +15,8 @@ export default {
     ChessBoard
   },
   mounted () {
-    socket.emit('sayhi')
-    socket.on('sayhi', msg => {
+    this.$socket.emit('sayhi')
+    this.$socket.on('sayhi', msg => {
       console.log(`Say hi from server, socket id : ${msg}`)
     })
   }

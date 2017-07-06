@@ -2,11 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import { startSocket } from '@/common/service/socket'
+import socket from '@/common/utils/socket'
 
 Vue.config.productionTip = false
 
-startSocket('gomoku')
+Vue.use(socket, {
+  namespace: 'gomoku'
+})
 
 /* eslint-disable no-new */
 new Vue({
