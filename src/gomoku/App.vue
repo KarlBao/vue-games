@@ -15,10 +15,7 @@ export default {
     ChessBoard
   },
   mounted () {
-    this.$socket.emit('sayhi')
-    this.$socket.on('sayhi', msg => {
-      console.log(`Say hi from server, socket id : ${msg}`)
-    })
+    this.$socket.emit('init')
   }
 }
 </script>

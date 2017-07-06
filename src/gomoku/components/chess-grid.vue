@@ -16,6 +16,10 @@
 <script>
   export default {
     props: {
+      id: {
+        type: Number,
+        required: true
+      },
       coord: {
         type: Object,
         required: true
@@ -27,11 +31,25 @@
       type: {
         type: String,
         default: 'normal'
+      },
+      enabled: {
+        type: Boolean,
+        default: false
+      },
+      chess: {
+        type: Number, // 0: empty, 1: black, 2: white
       }
     },
 
     data () {
-      return {}
+      return {
+      }
+    },
+
+    methods: {
+      putChess () {
+        this.$store.commit('updateChessBoard', this.id)
+      }
     }
   }
 </script>
