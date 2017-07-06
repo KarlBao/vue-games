@@ -14,6 +14,14 @@ export default {
   components: {
     ChessBoard
   },
+  beforeCreate () {
+    this.$socket.on('initRole', role => {
+      this.$store.commit('setRole', role)
+    })
+    this.$socket.on('putChess', (coord, chess) => {
+      this.$store.dispatch('putChess', {coord, chess})
+    })
+  },
   mounted () {
     this.$socket.emit('init')
   }

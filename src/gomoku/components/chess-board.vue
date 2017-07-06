@@ -10,7 +10,10 @@
       )
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+.chess-board
+  display: inline-block
+  background-color: #aaa
 .row
   overflow: hidden
 </style>

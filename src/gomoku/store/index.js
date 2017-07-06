@@ -21,13 +21,20 @@ export default new Vuex.Store({
     [types.SET_ROLE] (state, role) {
       state.role = role
     },
-    [types.PUT_CHESS] (state, id, chess) {
-      // update board
+    [types.PUT_CHESS] (state, {coord, chess}) {
+      let grid = state.chessBoard[coord.x][coord.y]
+      grid.chess = chess
     }
   },
   actions: {
-    putChess ({commit, getters}, id) {
-      commit(types.PUT_CHESS, id, getters.myChess)
+    [types.PUT_CHESS] ({commit, getters}, payload) {
+      let defaultPayload = {
+        coord: {x: 0, y: 0},
+        chess: getters.myChess
+      }
+      payload = Object.assign(defaultPayload, payload)
+      const {coord, chess} = payload
+      commit(types.PUT_CHESS, {coord, chess})
     }
   },
   getters: {

@@ -1,5 +1,5 @@
 <template lang="jade">
-  div.grid
+  div.grid(:style="{backgroundColor: color}", @click="putChess")
     slot(name="chess")
 </template>
 
@@ -38,6 +38,7 @@
       },
       chess: {
         type: Number, // 0: empty, 1: black, 2: white
+        default: 0
       }
     },
 
@@ -46,9 +47,18 @@
       }
     },
 
+    computed: {
+      color () {
+        return this.chess === 1
+          ? '#000' : this.chess === 2
+          ? '#fff' : 'none'
+      }
+    },
+
     methods: {
       putChess () {
-        this.$store.commit('updateChessBoard', this.id)
+        this.$store.dispatch('putChess', {coord: this.coord})
+        this.$socket.emit('putChess', this.coord)
       }
     }
   }
