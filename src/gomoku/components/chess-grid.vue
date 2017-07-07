@@ -52,11 +52,18 @@
         return this.chess === 1
           ? '#000' : this.chess === 2
           ? '#fff' : 'none'
+      },
+      myTurn () {
+        return this.$store.getters.myTurn
       }
     },
 
     methods: {
       putChess () {
+        if (!this.myTurn) {
+          return
+        }
+
         this.$store.dispatch('putChess', {coord: this.coord})
         this.$socket.emit('putChess', this.coord)
       }

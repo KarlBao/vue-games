@@ -6,7 +6,7 @@
         :id="grid.id",
         :coord="{x: grid.x, y: grid.y}",
         :chess="grid.chess",
-        :key="grid.id"
+        :key="grid.id + '' + grid.chess"
       )
 </template>
 
