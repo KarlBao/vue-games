@@ -60,7 +60,7 @@
 
     methods: {
       putChess () {
-        if (!this.myTurn) {
+        if (!this.myTurn || this.chess !== null) {
           return
         }
 
