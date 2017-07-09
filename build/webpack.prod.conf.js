@@ -103,7 +103,7 @@ Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
     filename: pluginConfig.filename,
     template: pluginConfig.template, //模板路径
     inject: pluginConfig.inject,
-    chunks: [name, 'vendor'],
+    chunks: [name, 'vendor', 'manifest'],
     minify: {
       removeComments: true,
       collapseWhitespace: true,
@@ -125,7 +125,7 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
   template: path.resolve(__dirname, '../index.html'),
   inject: true,
   availableProjects: config.base.htmlWebpackPluginConfig,
-  chunks: ['vendor'],
+  chunks: ['vendor', 'manifest'],
   minify: {
     removeComments: true,
     collapseWhitespace: true,
