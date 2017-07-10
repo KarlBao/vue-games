@@ -14,7 +14,7 @@ import io from 'socket.io-client'
 
 export default {
   install (Vue, opts = {}) {
-    const host = 'http://localhost:3000'
+    const host = process.env.NODE_ENV === 'production' ? 'http://api.karlbao.com' : 'http://localhost:3000'
 
     const defaultOpts = {
       namespace: ''
