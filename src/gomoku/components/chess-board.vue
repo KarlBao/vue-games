@@ -6,14 +6,16 @@
         :id="grid.id",
         :coord="{x: grid.x, y: grid.y}",
         :chess="grid.chess",
-        :key="grid.id + '' + grid.chess"
+        :key="grid.id + '' + grid.chess",
+        :total-cols="chessBoard.length",
+        :total-rows="chessBoard[x-1].length"
       )
 </template>
 
 <style lang="stylus" scoped>
 .chess-board
   display: inline-block
-  background-color: #aaa
+  background-color: #ccc
 .row
   overflow: hidden
 </style>
