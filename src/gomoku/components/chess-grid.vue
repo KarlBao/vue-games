@@ -1,7 +1,7 @@
 <template lang="jade">
   div.grid(@click="putChess")
     span.guideline(:class="gridClass")
-    span.chess(:style="{backgroundColor: color}")
+    span.chess(:style="{backgroundColor: color}", :class="{'allowed': allowed}")
     slot(name="chess")
 </template>
 
@@ -61,11 +61,13 @@
       width: 50%
 .chess
   position: absolute
-  top: 20%
-  left: 20%
+  top: 10%
+  left: 10%
   width: 80%
   height: 80%
   border-radius: 50%
+  &.allowed:hover
+    background-color: rgba(0,0,0,.1)
 </style>
 
 <script>
@@ -144,12 +146,15 @@
       },
       myTurn () {
         return this.$store.getters.myTurn
+      },
+      allowed () {
+        return this.myTurn && this.chess === null
       }
     },
 
     methods: {
       putChess () {
-        if (!this.myTurn || this.chess !== null) {
+        if (!this.allowed) {
           return
         }
 

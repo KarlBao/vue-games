@@ -1,6 +1,7 @@
 <template lang="jade">
   div#app
     div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
+    player-list
     chess-board(
       :num-of-rows="10",
       :num-of-cols="10"
@@ -21,11 +22,13 @@
 
 <script>
 import ChessBoard from './components/chess-board'
+import PlayerList from './components/player-list'
 
 export default {
   name: 'app',
   components: {
-    ChessBoard
+    ChessBoard,
+    PlayerList
   },
   beforeCreate () {
     this.$socket.on('initRole', role => {

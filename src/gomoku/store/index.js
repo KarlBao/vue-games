@@ -7,14 +7,16 @@ const types = {
   INIT_CHESS_BOARD: 'initChessBoard', // 获得初始棋盘状态
   SET_ROLE: 'setRole', // 设置用户角色
   PUT_CHESS: 'putChess', // 放一颗棋子
-  SET_TURN: 'setTurn'
+  SET_TURN: 'setTurn',
+  UPDATE_PLAYER_LIST: 'updatePlayerList' // 刷新玩家列表
 }
 
 export default new Vuex.Store({
   state: {
     chessBoard: [],
     role: 0, // 0: 观众， 1: 黑子， 2: 白子
-    turn: -1
+    turn: -1,
+    playerList: []
   },
   mutations: {
     [types.INIT_CHESS_BOARD] (state, board) {
@@ -24,11 +26,14 @@ export default new Vuex.Store({
       state.role = role
     },
     [types.PUT_CHESS] (state, {coord, chess}) {
-      let grid = state.chessBoard[coord.x][coord.y]
+      let grid = state.chessBoard[coord.y][coord.x]
       grid.chess = chess
     },
     [types.SET_TURN] (state, role) {
       state.turn = role
+    },
+    [types.UPDATE_PLAYER_LIST] (state, list) {
+      state.playerList = list
     }
   },
   actions: {
