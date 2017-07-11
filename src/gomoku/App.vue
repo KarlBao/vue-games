@@ -1,14 +1,19 @@
 <template lang="jade">
   div#app
-    div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
-    player-list
-    chess-board(
-      :num-of-rows="10",
-      :num-of-cols="10"
-    )
+    div#main
+      div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
+      player-list
+      chess-board(
+        :num-of-rows="10",
+        :num-of-cols="10"
+      )
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+#main
+  position: relative
+  width: 1200px
+  margin: 0 auto
 .turn-alert
   width: 20px
   height: 20px

@@ -68,6 +68,12 @@ export default new Vuex.Store({
     },
     myTurn (state) {
       return state.turn === state.role
+    },
+    blackPlayer (state) {
+      return state.playerList.find(player => player.role === 1)
+    },
+    whitePlayer (state) {
+      return state.playerList.find(player => player.role === 2)
     }
   }
 })

@@ -15,6 +15,7 @@
 <style lang="stylus" scoped>
 .chess-board
   display: inline-block
+  vertical-align: top
   background-color: #d0c7b8
 .row
   overflow: hidden

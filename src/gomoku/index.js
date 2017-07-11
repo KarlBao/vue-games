@@ -4,6 +4,7 @@ import Vue from 'vue'
 import socket from '@/common/utils/socket'
 import App from './App'
 import store from './store'
+import 'normalize.css'
 
 Vue.config.productionTip = false
 
