@@ -1,6 +1,5 @@
 <template lang="jade">
   div#app
-    common-input
     div#main
       div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
       player-list
@@ -29,13 +28,12 @@
 <script>
 import ChessBoard from './components/chess-board'
 import PlayerList from './components/player-list'
-import CommonInput from '@/common/components/common-input'
+
 export default {
   name: 'app',
   components: {
     ChessBoard,
-    PlayerList,
-    CommonInput
+    PlayerList
   },
   beforeCreate () {
     this.$socket.on('initRole', role => {
@@ -47,6 +45,11 @@ export default {
     this.$socket.on('switchTurn', role => {
       this.$store.commit('setTurn', role)
     })
+  },
+  data () {
+    return {
+      text: ''
+    }
   },
   mounted () {
     this.$socket.emit('init')

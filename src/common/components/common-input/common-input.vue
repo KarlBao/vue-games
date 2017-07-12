@@ -2,11 +2,12 @@
   div.common-input-ctnr(:class="{focused: isFocused}")
     input.common-input(
       ref="input",
-      :type="type", :model="model", :maxlength="maxlength",
+      :value="value", @input="updateValue($event.target.value)",
+      :type="type", :maxlength="maxlength",
       :style="{width: width + 'px', height: height + 'px', 'line-height': height + 'px'}",
       @click="click", @change="change", @focus="focusFunc", @blur="blurFunc", @keyup="keyup", @keydown="keydown"
     )
-    span.placeholder(:class="{out: isFocused}", :style="{height: height + 'px', 'line-height': height + 'px'}") {{placeholder}}
+    span.placeholder(:class="{out: isFocused || value !== ''}", :style="{height: height + 'px', 'line-height': height + 'px'}") {{placeholder}}
 </template>
 
 <style lang="stylus" scoped>
@@ -16,12 +17,8 @@
   display: inline-block
   position: relative
   padding: 3px 8px
-  border-bottom: 1px solid $commonColor.blue
-  overflow: hidden
-  &.focused
-    .placeholder
-      bottom: 100%
-      opacity: 0
+  border-bottom: 2px solid $commonColor.blue
+
 .common-input
   padding: 0
   border: none
@@ -34,26 +31,29 @@
   position: absolute
   bottom: 3px
   left: 8px
-  color: #e3e3e3
+  color: #aaa
   opacity: 1
-  transition: all .2s
+  transition: all .3s ease-out
+  &.out
+    bottom: 100%
+    opacity: 0
 </style>
 
 <script>
   export default {
     props: {
-      model: {
-        'default': ''
+      value: {
+        default: ''
       },
 
       type: {
         type: String,
-        'default': 'text'
+        default: 'text'
       },
 
       placeholder: {
         type: String,
-        'default': 'xxx'
+        default: ''
       },
 
       maxlength: {
@@ -62,7 +62,7 @@
 
       width: {
         type: Number,
-        'default': 100
+        default: 100
       },
 
       height: {
@@ -72,32 +72,32 @@
 
       click: {
         type: Function,
-        'default': noop
+        default: noop
       },
 
       focus: {
         type: Function,
-        'default': noop
+        default: noop
       },
 
       change: {
         type: Function,
-        'default': noop
+        default: noop
       },
 
       blur: {
         type: Function,
-        'default': noop
+        default: noop
       },
 
       keyup: {
         type: Function,
-        'default': noop
+        default: noop
       },
 
       keydown: {
         type: Function,
-        'default': noop
+        default: noop
       }
     },
 
@@ -118,6 +118,9 @@
       blurFunc () {
         this.blur()
         this.isFocused = false
+      },
+      updateValue (value) {
+        this.$emit('input', value)
       }
     }
   }
