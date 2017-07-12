@@ -1,0 +1,8 @@
+{
+  "name": "gomoku",
+  "title": "gomoku",
+  "author": "Karl",
+  "entry": "index.js",
+  "template": "index.jade",
+  "distPath": "index.html"
+}

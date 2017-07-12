@@ -13,7 +13,6 @@ body
 <script>
 import EventBus from '@/common/components/EventBus'
 import BlockList from './components/block-list'
-
 export default {
   name: 'app',
   data () {
