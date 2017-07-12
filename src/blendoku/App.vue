@@ -11,7 +11,7 @@ body
 </style>
 
 <script>
-import EventBus from '@/common/components/EventBus'
+import EventBus from '@/common/utils/EventBus'
 import BlockList from './components/block-list'
 export default {
   name: 'app',

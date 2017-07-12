@@ -44,7 +44,7 @@
 </style>
 
 <script>
-import EventBus from '@/common/components/EventBus'
+import EventBus from '@/common/utils/EventBus'
 export default {
   name: 'block',
   props: {
