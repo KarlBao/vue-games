@@ -8,7 +8,7 @@ var config = {
     htmlWebpackPluginConfig: {} // 对应 webpack 中的 htmlWebpackPlugin 配置
   },
   build: {
-    env: require('./env/prod.env'),
+    env: require('./env/env.prod'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -27,7 +27,7 @@ var config = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
-    env: require('./env/dev.env'),
+    env: require('./env/env.dev'),
     port: 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
@@ -64,7 +64,8 @@ dirs.forEach(dirName => {
     title: project.title,
     filename: `${project.name}/${project.distPath}`,
     template: `${dirPath}/${project.template}`,
-    inject: true
+    inject: true,
+    author: project.author
   }
 })
 

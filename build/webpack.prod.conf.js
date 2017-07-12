@@ -26,9 +26,9 @@ var webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
+    new webpack.DefinePlugin(merge(env, {
       'process.env': env
-    }),
+    })),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -104,8 +104,9 @@ Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
     template: pluginConfig.template, //模板路径
     inject: pluginConfig.inject,
     chunks: [name, 'vendor', 'manifest'],
+    author: pluginConfig.author,
     minify: {
-      removeComments: true,
+      removeComments: false,
       collapseWhitespace: true,
       removeAttributeQuotes: true
       // more options:

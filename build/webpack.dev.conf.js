@@ -13,9 +13,9 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 })
 
 var plugins = [
-  new webpack.DefinePlugin({
+  new webpack.DefinePlugin(merge(config.dev.env, {
     'process.env': config.dev.env
-  }),
+  })),
   // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
@@ -32,7 +32,8 @@ Object.keys(config.base.htmlWebpackPluginConfig).forEach(name => {
     filename: pluginConfig.filename,
     template: pluginConfig.template, //模板路径
     inject: pluginConfig.inject,
-    chunks: [name]
+    chunks: [name],
+    author: pluginConfig.author
   }
 
   // 配置并插入多个htmlWebpackPlugin
