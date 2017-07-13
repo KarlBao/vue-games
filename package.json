@@ -12,6 +12,8 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
     "normalize.css": "^7.0.0",
     "socket.io": "^2.0.3",
     "vue": "^2.3.3",
