@@ -1,25 +1,90 @@
 <template lang="jade">
-  div.modal.fade(id="modal", tabindex="-1", role="dialog")
-    div.modal-dialog(:class="['modal-' + size]")
-      div.modal-content
-        div.modal-header(v-if="header")
-          button.close(@click.native="close")
-            span
-          h4.modal-title {{title}}
-        div.modal-body
-          slot
-        div.modal-footer(v-if="footer")
-          common-button(v-if="buttons.cancel !== false", @click.native="close") {{buttons.cancel}}
-          common-button(v-if="buttons.confirm !== false", @click.native="confirm") {{buttons.confirm}}
+  div.modal.fade(v-show="show || modalShown", tabindex="-1", role="dialog")
+    transition(
+      name="fade-in-up",
+      @before-enter="modalShown = true",
+      @after-leave="modalShown = false"
+    )
+      div.modal-dialog(v-show="show", :class="['modal-' + size]")
+        div.modal-content
+          div.modal-header(v-if="header")
+            span.close.icon-font.icon-cancel(@click="close")
+            h4.modal-title {{title}}
+          div.modal-body
+            slot
+          div.modal-footer(v-if="footer")
+            common-button.btn(v-if="buttons.cancel !== false", @click.native="close", type="ghost", size="sm") {{buttons.cancel}}
+            common-button.btn(v-if="buttons.confirm !== false", @click.native="confirm", size="sm") {{buttons.confirm}}
 </template>
 
+<style lang="stylus" scoped>
+@import './index.styl'
+@import '~@/common/style/transition.styl'
+
+.modal
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  overflow: auto
+  background-color: $color.backdrop
+  z-index: 99
+
+.modal-dialog
+  position: relative
+  margin: 30px auto
+  max-width: 500px
+  &.modal-sm
+    max-width: 250px
+  &.modal-md
+    max-width: 500px
+  &.modal-lg
+    max-width: 800px
+
+.modal-content
+  border: 1px solid rgba(0,0,0,.2)
+  border-radius: 4px
+  background-color: #fff
+
+.modal-header,
+.modal-body,
+.modal-footer
+  padding: 15px
+
+.modal-header
+  position: relative
+  border-bottom: 1px solid $color.cuttingLine
+  font-size: 24px
+  .modal-title
+    margin: 0
+    text-align: left
+    font-weight: normal
+  .close
+    position: absolute
+    top: 15px
+    right: 15px
+    color: #666
+    font-size: 16px
+    cursor: pointer
+
+.modal-footer
+  border-top: 1px solid $color.cuttingLine
+  text-align: right
+  .btn
+    margin-left: 15px
+</style>
+
 <script>
-  import $ from 'jquery'
-  import 'bootstrap'
   import CommonButton from '@/common/components/common-button'
 
   export default {
     props: {
+      // 显示、隐藏模态框
+      show: {
+        type: Boolean,
+        default: false
+      },
       // 模态框尺寸：['sm','md','lg']
       size: {
         type: String,
@@ -49,31 +114,20 @@
             cancel: '取消' // String | false
           }
         }
-      },
-      /**
-       * Modal激活可选参数
-       * @see http://v3.bootcss.com/javascript/#modals-options
-       */
-      options: {
-        type: Object,
-        default () {
-          return {}
-        }
+      }
+    },
+    data () {
+      return {
+        modalShown: false
       }
     },
     components: {
       CommonButton
     },
-    mounted () {
-      // console.log($('#modal'))
-      this.showModal()
-    },
     methods: {
       showModal () {
-        $('#modal').modal(this.options)
       },
       close () {
-        $(this.$el).modal('hide')
         this.$emit('close')
       },
       confirm () {

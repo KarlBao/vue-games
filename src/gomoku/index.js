@@ -5,6 +5,7 @@ import socket from '@/common/utils/socket'
 import App from './App'
 import store from './store'
 import 'normalize.css'
+import '@/common/style/icon-font/css/icon-font-embedded.css'
 
 Vue.config.productionTip = false
 

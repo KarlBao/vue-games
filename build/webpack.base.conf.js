@@ -50,7 +50,7 @@ var webpackBaseConfig = {
       },
       {
         test: /\.styl$/,
-        loader: 'stylus-loader'
+        loader: 'stylus-loader!css-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

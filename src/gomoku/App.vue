@@ -1,7 +1,7 @@
 <template lang="jade">
   div#app
     div#main
-      div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
+      div.turn-alert(:class="[myTurn ? 'turn' : 'wait']", @click="showModal")
       player-list
       chess-board(
         :num-of-rows="10",
@@ -28,6 +28,7 @@
 <script>
 import ChessBoard from './components/chess-board'
 import PlayerList from './components/player-list'
+import getTempName from './service/srv.getTempName'
 
 export default {
   name: 'app',
@@ -48,7 +49,7 @@ export default {
   },
   data () {
     return {
-      text: ''
+      showPopup: false
     }
   },
   mounted () {
@@ -57,6 +58,11 @@ export default {
   computed: {
     myTurn () {
       return this.$store.getters.myTurn
+    }
+  },
+  methods: {
+    showModal () {
+      getTempName()
     }
   }
 }
