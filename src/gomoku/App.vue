@@ -28,7 +28,7 @@
 <script>
 import ChessBoard from './components/chess-board'
 import PlayerList from './components/player-list'
-import getTempName from './service/srv.getTempName'
+import localName from './service/srv.localName'
 
 export default {
   name: 'app',
@@ -62,7 +62,9 @@ export default {
   },
   methods: {
     showModal () {
-      getTempName()
+      localName.set().then(res => {
+        console.log(res)
+      })
     }
   }
 }
