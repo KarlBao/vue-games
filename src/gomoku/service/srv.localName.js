@@ -7,6 +7,8 @@ import Vue from 'vue'
 import PopupModal from '@/common/components/popup-modal'
 import CommonInput from '@/common/components/common-input'
 
+const localStorageKey = 'localName' // 所有本地域名都存在此对象下
+
 const modalVM = new Vue({
   template: `
   <popup-modal :show="showModal" @close="close" @confirm="confirm">
@@ -14,7 +16,9 @@ const modalVM = new Vue({
   </popup-modal>`,
   data: {
     showModal: false,
-    localName: ''
+    localName: '',
+    nameKey: 'default',
+    confirmCallback: (name) => {}
   },
   components: {
     PopupModal,
@@ -31,31 +35,29 @@ const modalVM = new Vue({
       if (this.localName === '') {
         return
       }
-      // sn = setNameGenerator(true, this.localName)
-      sn.next()
+      const obj = localStorage.getItem(localStorageKey) ? localStorage.getItem(localStorageKey) : {}
+      console.log(obj)
+      obj[this.nameKey] = this.localName
+      localStorage.setItem(localStorageKey, obj)
+      this.confirmCallback(this.localName)
       this.showModal = false
     }
   }
 })
 
-let sn = null
-
-// 通过generator做异步调用
-function* setNameGenerator (confirm, name) {
-  return new Promise((resolve, reject) => {
-    if (confirm) {
-      localStorage.setItem('localName', name)
-      resolve(name)
-    } else {
-      reject()
-    }
-  })
+function setName (key = 'default', cb = (name) => {}) {
+  showModal()
+  modalVM.nameKey = key
+  modalVM.confirmCallback = cb
 }
 
-async function setName () {
-  showModal()
-  sn = setNameGenerator(true, 'xxx')
-  return await sn
+function getName (key = 'default') {
+  const localName = localStorage.getItem(localStorageKey)
+  if (localName) {
+    return localName[key]
+  } else {
+    return undefined
+  }
 }
 
 function showModal () {
@@ -70,7 +72,8 @@ function showModal () {
 }
 
 const methods = {
-  set: setName
+  set: setName,
+  get: getName
 }
 
 export default methods

@@ -62,8 +62,8 @@ export default {
   },
   methods: {
     showModal () {
-      localName.set().then(res => {
-        console.log(res)
+      localName.set('gomoku', name => {
+        console.log('The gomoku name is ' + name)
       })
     }
   }
