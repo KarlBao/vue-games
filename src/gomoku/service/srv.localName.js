@@ -11,8 +11,8 @@ const localStorageKey = 'localName' // 所有本地域名都存在此对象下
 
 const modalVM = new Vue({
   template: `
-  <popup-modal :show="showModal" @close="close" @confirm="confirm">
-    <common-input v-model="localName" :width="250" :height="40"></common-input>
+  <popup-modal :show="showModal" title="设置昵称" @close="close" @confirm="confirm">
+    <common-input v-model="localName" :width="400" :height="25" placeholder="输入昵称..."></common-input>
   </popup-modal>`,
   data: {
     showModal: false,
@@ -35,10 +35,9 @@ const modalVM = new Vue({
       if (this.localName === '') {
         return
       }
-      const obj = localStorage.getItem(localStorageKey) ? localStorage.getItem(localStorageKey) : {}
-      console.log(obj)
+      const obj = localStorage.getItem(localStorageKey) ? JSON.parse(localStorage.getItem(localStorageKey)) : {}
       obj[this.nameKey] = this.localName
-      localStorage.setItem(localStorageKey, obj)
+      localStorage.setItem(localStorageKey, JSON.stringify(obj))
       this.confirmCallback(this.localName)
       this.showModal = false
     }
@@ -49,10 +48,11 @@ function setName (key = 'default', cb = (name) => {}) {
   showModal()
   modalVM.nameKey = key
   modalVM.confirmCallback = cb
+  modalVM.localName = getName(key)
 }
 
 function getName (key = 'default') {
-  const localName = localStorage.getItem(localStorageKey)
+  const localName = JSON.parse(localStorage.getItem(localStorageKey))
   if (localName) {
     return localName[key]
   } else {
@@ -61,7 +61,6 @@ function getName (key = 'default') {
 }
 
 function showModal () {
-  console.log('show modal')
   // 如果还没挂载则手动挂载到body下
   if (!modalVM._isMounted) {
     const mountDiv = document.createElement('div')

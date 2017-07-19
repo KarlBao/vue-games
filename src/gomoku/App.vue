@@ -1,7 +1,7 @@
 <template lang="jade">
   div#app
     div#main
-      div.turn-alert(:class="[myTurn ? 'turn' : 'wait']", @click="showModal")
+      div.turn-alert(:class="[myTurn ? 'turn' : 'wait']")
       player-list
       chess-board(
         :num-of-rows="10",
@@ -49,7 +49,8 @@ export default {
   },
   data () {
     return {
-      showPopup: false
+      showPopup: false,
+      username: undefined
     }
   },
   mounted () {
@@ -61,10 +62,14 @@ export default {
     }
   },
   methods: {
-    showModal () {
-      localName.set('gomoku', name => {
-        console.log('The gomoku name is ' + name)
-      })
+    // 设置用户昵称
+    getUsername () {
+      this.username = localName.get('gomoku')
+      if (!this.username) {
+        localName.set('gomoku', name => {
+          this.username = name
+        })
+      }
     }
   }
 }

@@ -55,7 +55,7 @@
 .modal-header
   position: relative
   border-bottom: 1px solid $color.cuttingLine
-  font-size: 24px
+  font-size: 18px
   .modal-title
     margin: 0
     text-align: left
