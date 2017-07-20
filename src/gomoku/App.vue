@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted () {
-    this.$socket.emit('enter')
+    this.enterRoom()
   },
   computed: {
     myTurn () {
@@ -64,6 +64,10 @@ export default {
     }
   },
   methods: {
+    enterRoom () {
+      this.$socket.emit('enter')
+      this.$socket.emit('init')
+    }
   }
 }
 </script>
