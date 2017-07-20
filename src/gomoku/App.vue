@@ -28,7 +28,6 @@
 <script>
 import ChessBoard from './components/chess-board'
 import PlayerList from './components/player-list'
-import localName from './service/srv.localName'
 
 export default {
   name: 'app',
@@ -37,14 +36,17 @@ export default {
     PlayerList
   },
   beforeCreate () {
-    this.$socket.on('initRole', role => {
-      this.$store.commit('setRole', role)
+    this.$socket.on('setSocket', socketId => {
+      this.$store.commit('setSocket', socketId)
     })
     this.$socket.on('putChess', (coord, chess) => {
       this.$store.dispatch('putChess', {coord, chess})
     })
-    this.$socket.on('switchTurn', role => {
+    this.$socket.on('setTurn', role => {
       this.$store.commit('setTurn', role)
+    })
+    this.$socket.on('getWinner', role => {
+      alert(`Winner is ${role}`)
     })
   },
   data () {
@@ -54,7 +56,7 @@ export default {
     }
   },
   mounted () {
-    this.$socket.emit('init')
+    this.$socket.emit('enter')
   },
   computed: {
     myTurn () {
@@ -62,15 +64,6 @@ export default {
     }
   },
   methods: {
-    // 设置用户昵称
-    getUsername () {
-      this.username = localName.get('gomoku')
-      if (!this.username) {
-        localName.set('gomoku', name => {
-          this.username = name
-        })
-      }
-    }
   }
 }
 </script>

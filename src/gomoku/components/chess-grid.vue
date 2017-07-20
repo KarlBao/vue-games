@@ -2,7 +2,7 @@
   div.grid(@click="putChess")
     span.guideline(:class="gridClass")
     span.chess(:style="{backgroundColor: color}", :class="{'allowed': allowed}")
-    slot(name="chess")
+      span.preview(:style="{backgroundColor: myColor}")
 </template>
 
 <style lang="stylus">
@@ -66,8 +66,13 @@
   width: 80%
   height: 80%
   border-radius: 50%
+  overflow: hidden
   &.allowed:hover
-    background-color: rgba(0,0,0,.1)
+    .preview
+      display: block
+      width: 100%
+      height: 100%
+      opacity: .2
 </style>
 
 <script>
@@ -142,6 +147,11 @@
       color () {
         return this.chess === 1
           ? '#000' : this.chess === 2
+          ? '#fff' : 'none'
+      },
+      myColor () {
+        return this.$store.getters.role === 1
+          ? '#000' : this.$store.getters.role === 2
           ? '#fff' : 'none'
       },
       myTurn () {
