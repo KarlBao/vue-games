@@ -128,7 +128,7 @@
       showModal () {
       },
       close () {
-        this.$emit('close')
+        this.$emit('cancel')
       },
       confirm () {
         this.$emit('confirm', this)

@@ -11,7 +11,7 @@ const localStorageKey = 'localName' // 所有本地域名都存在此对象下
 
 const modalVM = new Vue({
   template: `
-  <popup-modal :show="showModal" title="设置昵称" @close="close" @confirm="confirm">
+  <popup-modal :show="showModal" title="设置昵称" @cancel="close" @confirm="confirm">
     <common-input v-model="localName" :width="400" :height="25" placeholder="输入昵称..."></common-input>
   </popup-modal>`,
   data: {

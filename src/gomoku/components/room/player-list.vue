@@ -35,7 +35,7 @@
 
 <script>
   import CommonButton from '@/common/components/common-button'
-  import localName from './../service/srv.localName'
+  import localName from './../../service/srv.localName'
 
   export default {
     data () {

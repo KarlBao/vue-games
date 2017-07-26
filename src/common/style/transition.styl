@@ -18,4 +18,40 @@
   transition: all .5s ease
 
 
+/**
+ * fade-in-left
+ * -----
+ * 左进右出
+ */
+.fade-in-left-enter
+  transform: translateX(-100%)
 
+.fade-in-left-leave-to
+  transform: translateX(100%)
+
+.fade-in-left-enter-to,
+.fade-in-left-leave
+  transform: translateX(0)
+
+.fade-in-left-enter-active,
+.fade-in-left-leave-active
+  transition: transform .3s ease
+
+/**
+ * fade-in-right
+ * -----
+ * 右进左出
+ */
+.fade-in-right-enter
+  transform: translateX(100%)
+
+.fade-in-right-leave-to
+  transform: translateX(-100%)
+
+.fade-in-right-enter-to,
+.fade-in-right-leave
+  transform: translateX(0)
+
+.fade-in-right-enter-active,
+.fade-in-right-leave-active
+  transition: transform .3s ease

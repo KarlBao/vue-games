@@ -4,6 +4,7 @@ import Vue from 'vue'
 import socket from '@/common/utils/socket'
 import App from './App'
 import store from './store'
+import router from './router'
 import 'normalize.css'
 import '@/common/style/icon-font/css/icon-font-embedded.css'
 
@@ -17,6 +18,7 @@ Vue.use(socket, {
 new Vue({
   el: '#app',
   store,
+  router,
   template: '<App/>',
   components: { App }
 })
