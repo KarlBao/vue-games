@@ -3,7 +3,12 @@
     div.header
       h2.f-left.title 当前房间：
       common-button.f-right.create-btn(@click.native="createRoom") 新的房间
-    router-link.room-link(v-for="room in rooms", :key="room", :to="'/room/' + room") {{room}}号房间
+    
+    div.f-left(v-if="rooms.length === 0")
+      p 目前没有可以进入的房间...新建一个吧...
+      
+    div.room-list.f-left(v-else)
+      router-link.dp-block.room-link(v-for="room in rooms", :key="room", :to="'/room/' + room") {{room}}号房间
 </template>
 
 <style lang="stylus" scoped>
@@ -11,12 +16,13 @@
   height: 80px
   line-height: 80px
   overflow: hidden
-  h2,
-  .create-btn
-    line-height: 80px
+
 .create-btn
   margin-right: 60px
   float: right
+
+.room-link
+  margin-top: 20px
 </style>
 
 <script>
