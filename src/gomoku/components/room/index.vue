@@ -19,7 +19,7 @@ div#room
 #room
   position: relative
   width: 1200px
-  margin: 0 auto
+  margin: 60px auto
 .turn-alert
   width: 20px
   height: 20px
@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     enterRoom () {
-      console.log(this.$route.params)
       this.roomId = this.$route.params.id
       if (!this.roomId) {
         return

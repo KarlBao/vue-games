@@ -11,10 +11,11 @@
  * 在组件中通过 this.$socket 调用
  */
 import io from 'socket.io-client'
+import { serverConfig } from '@/common/config'
 
 export default {
   install (Vue, opts = {}) {
-    const host = process.env.NODE_ENV === 'production' ? 'http://api.karlbao.com' : 'http://localhost:3000'
+    const host = serverConfig.host
 
     const defaultOpts = {
       namespace: ''
@@ -22,7 +23,7 @@ export default {
 
     const options = Object.assign(defaultOpts, opts)
 
-    const socket = io(`${host}/${options.namespace}`)
+    const socket = io(`${host}${options.namespace}`)
 
     Vue.prototype.$socket = socket
   }

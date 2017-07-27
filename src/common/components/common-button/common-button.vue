@@ -1,13 +1,13 @@
 <template lang="jade">
-  button.common-button(:class="[type, 'size-'+size]")
+  button.common-btn(:class="[type, 'size-'+size]")
     slot
 </template>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 @import '~@/common/style/color.styl'
 @import './index.styl'
 
-.common-button
+.common-btn
   position: relative
   border: none
   border-image: none

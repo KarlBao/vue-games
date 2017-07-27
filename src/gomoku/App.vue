@@ -1,12 +1,17 @@
 <template lang="jade">
   div#app
-    transition(name="fade-in-left")
-      router-view
+    router-view  
 </template>
 
 <style lang="stylus">
 @import 'index.styl'
-@import '~@/common/style/transition.styl'
+</style>
+
+<style lang="stylus" scoped>
+#app
+  width: 100%
+  max-width: 1400px
+  margin: auto
 </style>
 
 <script>
