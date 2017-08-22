@@ -8,15 +8,15 @@ import 'normalize.css'
 /**
  * 引入muse-ui组件库：
  */
-// import MuseUI from 'muse-ui'
-// import 'muse-ui/dist/muse-ui.css'
-// Vue.use(MuseUI)
+import MuseUI from 'muse-ui'
+import 'muse-ui/dist/muse-ui.css'
+Vue.use(MuseUI)
 /**
  * 引入muse-ui主题：
  */
 // import 'muse-ui/dist/theme-default.css'
 // import 'muse-ui/dist/theme-light.css'
-// import 'muse-ui/dist/theme-dark.css'
+import 'muse-ui/dist/theme-dark.css'
 // import 'muse-ui/dist/theme-carbon.css'
 // import 'muse-ui/dist/theme-teal.css'
 

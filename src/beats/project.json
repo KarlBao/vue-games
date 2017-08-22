@@ -1,0 +1,8 @@
+{
+  "name": "beats",
+  "title": "beats",
+  "author": "Karl",
+  "entry": "index.js",
+  "template": "index.jade",
+  "distPath": "index.html"
+}
