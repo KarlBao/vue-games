@@ -14,7 +14,7 @@
       @complete="nextLevel"
     )
     mu-dialog(
-      :open="gameover",
+      :open="gameover || !level",
       title="Game Over"
     )
       span YOUR SCORE: {{ score }}
