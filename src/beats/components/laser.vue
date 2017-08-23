@@ -51,7 +51,9 @@
         progress: 0,
         event: null,
         timer: null,
-        start: false
+        start: false,
+        fps: 30, // 动画帧率
+        then: 0
       }
     },
     computed: {
@@ -60,6 +62,20 @@
       },
       position () {
         return this.from === 'left' || this.from === 'top' ? this.progress : (100 - this.progress)
+      },
+      // 每个百分点发送触发事件
+      intPosition () {
+        return parseInt(this.position)
+      }
+    },
+    watch: {
+      intPosition (pos) {
+        if (this.laserDirection === 'v') {
+          EventBus.$emit('laserX' + this.intPosition)
+        }
+        if (this.laserDirection === 'h') {
+          EventBus.$emit('laserY' + this.intPosition)
+        }
       }
     },
     mounted () {
@@ -67,26 +83,36 @@
     },
     methods: {
       init () {
-        const period = 1000 / this.speed
-        this.timer = setInterval(this.playFrame, period)
+        this.fps = this.speed > this.fps ? this.speed : this.fps
+        // const period = 1000 / this.fps
+        // this.timer = setInterval(this.playFrame, period)
+        this.then = Date.now()
+        this.animate()
         setTimeout(() => {
           this.start = true
         }, 1)
       },
+      animate () {
+        this.timer = requestAnimationFrame(this.animate)
+        const now = Date.now()
+        const elapsed = now - this.then
+        const fpsInterval = 1000 / this.fps
+
+        if (elapsed > fpsInterval) {
+          this.playFrame()
+          this.then = now - (elapsed % fpsInterval)
+        }
+      },
       playFrame () {
-        if (this.laserDirection === 'v') {
-          EventBus.$emit('laserX' + this.position)
-        }
-        if (this.laserDirection === 'h') {
-          EventBus.$emit('laserY' + this.position)
-        }
-        this.progress++
+        const frameProgress = this.speed / this.fps
+        this.progress = this.progress + frameProgress
         if (this.progress > 100) {
           this.destroy()
         }
       },
       destroy () {
-        clearInterval(this.timer)
+        // clearInterval(this.timer)
+        cancelAnimationFrame(this.timer)
         this.$emit('destroy', this.id)
       }
     }

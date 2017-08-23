@@ -6,8 +6,8 @@ const types = {
 
 const store = {
   state: {
-    hearts: 10,
-    maxHearts: 10
+    hearts: 6,
+    maxHearts: 6
   },
   mutations: {
     [types.REDUCE_HEARTS] (state, n) {
