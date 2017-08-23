@@ -1,6 +1,6 @@
 {
-  "name": "beats",
-  "title": "beats",
+  "name": "Lasers",
+  "title": "lasers",
   "author": "Karl",
   "entry": "index.js",
   "template": "index.jade",

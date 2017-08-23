@@ -1,14 +1,15 @@
 <template lang="jade">
   div.level
     laser(
-      v-for="laser in lasers",
+      v-for="laser in activeLasers",
       :key="laser.id",
       :id="laser.id",
       :from="laser.from",
+      :speed="laser.speed",
       @destroy="removeLaser"
     )
     beat-point(
-      v-for="point in points",
+      v-for="point in activePoints",
       :key="point.id",
       :id="point.id",
       :left="point.left",
@@ -35,9 +36,9 @@ export default {
       type: Number,
       required: true
     },
-    numOfLasers: {
-      type: Number,
-      default: 1
+    lasers: {
+      type: Array,
+      default: []
     },
     numOfPoints: {
       type: Number,
@@ -48,8 +49,8 @@ export default {
     return {
       laserId: 1,
       pointId: 1,
-      lasers: [],
-      points: []
+      activeLasers: [],
+      activePoints: []
     }
   },
   watch: {
@@ -66,40 +67,54 @@ export default {
   },
   methods: {
     initLevel () {
-      this.lasers = []
-      this.points = []
-      for (let i = 0; i < this.numOfPoints; i++) {
-        this.addPoint()
-      }
-      for (let i = 0; i < this.numOfLasers; i++) {
-        this.addLaser()
-      }
+      this.activeLasers = []
+      this.activePoints = []
+      this.addPoints()
+      this.addLasers()
     },
-    addLaser () {
-      this.lasers.push({
-        id: this.laserId++,
-        speed: 20,
-        from: 'left'
+    addLasers () {
+      let randomDirections = ['left', 'right', 'top', 'bottom']
+
+      const getRandomDirection = (directions = ['left', 'right', 'top', 'bottom']) => {
+        let index = Math.floor(Math.random() * directions.length)
+        return directions[index]
+      }
+
+      this.lasers.forEach(laser => {
+        if (laser.from === 'random') {
+          laser.from = getRandomDirection(randomDirections)
+          const index = randomDirections.indexOf(laser.from)
+          if (index > -1) {
+            randomDirections = randomDirections.splice(1, index)
+          }
+        }
+        this.activeLasers.push({
+          id: this.laserId++,
+          speed: laser.speed,
+          from: laser.from
+        })
       })
     },
     removeLaser (id) {
-      this.lasers = this.lasers.filter(laser => laser.id !== id)
-      if (this.lasers.length === 0) {
+      this.activeLasers = this.activeLasers.filter(laser => laser.id !== id)
+      if (this.activeLasers.length === 0) {
         // finish level
         this.finishLevel()
       }
     },
-    addPoint () {
-      const top = Math.ceil(Math.random() * 80) + 10
-      const left = Math.ceil(Math.random() * 80) + 10
-      this.points.push({
-        id: this.pointId++,
-        top: top,
-        left: left
-      })
+    addPoints () {
+      for (let i = 0; i < this.numOfPoints; i++) {
+        const top = Math.ceil(Math.random() * 80) + 10
+        const left = Math.ceil(Math.random() * 80) + 10
+        this.activePoints.push({
+          id: this.pointId++,
+          top: top,
+          left: left
+        })
+      }
     },
     removePoint (id) {
-      this.points = this.points.filter(point => point.id !== id)
+      this.activePoints = this.activePoints.filter(point => point.id !== id)
     },
     finishLevel () {
       this.$emit('complete')

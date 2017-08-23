@@ -31,7 +31,7 @@ transition(:name="transitionName")
   transition: all .3s ease-in-out
 .tap-leave-to
   opacity: 0
-  transform: scale(1.5,1.5)
+  transform: scale(4,4)
 
 .laser-leave
   opacity: 1
@@ -83,7 +83,7 @@ transition(:name="transitionName")
         this.events.laserX = EventBus.$once('laserX' + this.left, () => {
           this.onLaserTouch()
         })
-        this.events.laserY = EventBus.$on('laserY' + this.top, () => {
+        this.events.laserY = EventBus.$once('laserY' + this.top, () => {
           this.onLaserTouch()
         })
       },
@@ -92,19 +92,27 @@ transition(:name="transitionName")
           this.destroyedBy = 'laser'
           this.show = false
           this.destroy()
+          this.reduceHeart() // -1s
         }
       },
       tap () {
         if (this.show) {
           this.destroyedBy = 'tap'
           this.show = false
+          this.addScore()
           this.destroy()
         }
       },
+      reduceHeart () {
+        this.$store.dispatch('reduceHearts', 1)
+      },
+      addScore () {
+        this.$store.dispatch('addScore', 1)
+      },
       destroy () {
-        Object.keys(this.events).forEach(event => {
-          EventBus.$off(this.events[event])
-        })
+        // Object.keys(this.events).forEach(event => {
+        //   EventBus.$off(this.events[event])
+        // })
         this.$nextTick(() => {
           this.$emit('destroy', this.id)
         })

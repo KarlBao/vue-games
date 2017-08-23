@@ -1,35 +1,87 @@
-class Level {
+class Laser {
   constructor ({
-    points = 5,
-    lasers = 1,
     from = 'random',
     speed = 10
   }) {
-    this.points = points
-    this.lasers = lasers
     this.from = from
     this.speed = speed
   }
 }
 
+class Level {
+  constructor ({
+    points = 5,
+    lasers = [new Laser()]
+  }) {
+    this.points = points
+    this.lasers = lasers
+  }
+}
+
 const levels = {
   1: new Level({
-    from: 'left'
+    lasers: [
+      new Laser({
+        from: 'left'
+      })
+    ]
   }),
   2: new Level({
-    from: 'right'
+    lasers: [
+      new Laser({
+        from: 'right'
+      })
+    ]
   }),
   3: new Level({
-    from: 'top',
-    speed: 15
+    points: 6,
+    lasers: [
+      new Laser({
+        from: 'top',
+        speed: 15
+      })
+    ]
   }),
   4: new Level({
-    from: 'bottom',
-    speed: 15
+    points: 6,
+    lasers: [
+      new Laser({
+        from: 'bottom',
+        speed: 15
+      })
+    ]
   }),
   5: new Level({
-    from: 'left',
-    speed: 20
+    lasers: [
+      new Laser({
+        from: 'bottom',
+        speed: 15
+      }),
+      new Laser({
+        from: 'left',
+        speed: 15
+      })
+    ]
+  }),
+  6: new Level({
+    lasers: [
+      new Laser({
+        from: 'top',
+        speed: 10
+      }),
+      new Laser({
+        from: 'left',
+        speed: 10
+      }),
+      new Laser({
+        from: 'right',
+        speed: 10
+      }),
+      new Laser({
+        from: 'bottom',
+        speed: 10
+      })
+    ]
   })
 }
 

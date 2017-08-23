@@ -3,7 +3,7 @@
   //- transitionDuration: 100/speed+'s'
   div.laser(
     :class="[laserDirection === 'v' ? 'vertical' : 'horizontal', start ? 'animating' : '', 'from-'+from]",
-    :style="{top: laserDirection === 'v' ? 0 : progress+'%', left: laserDirection === 'h' ? 0 : progress+'%'}"
+    :style="{top: laserDirection === 'v' ? 0 : position+'%', left: laserDirection === 'h' ? 0 : position+'%'}"
   )
 </template>
 
@@ -57,6 +57,9 @@
     computed: {
       laserDirection () {
         return this.from === 'left' || this.from === 'right' ? 'v' : 'h'
+      },
+      position () {
+        return this.from === 'left' || this.from === 'top' ? this.progress : (100 - this.progress)
       }
     },
     mounted () {
@@ -72,10 +75,10 @@
       },
       playFrame () {
         if (this.laserDirection === 'v') {
-          EventBus.$emit('laserX' + this.progress)
+          EventBus.$emit('laserX' + this.position)
         }
         if (this.laserDirection === 'h') {
-          EventBus.$emit('laserY' + this.progress)
+          EventBus.$emit('laserY' + this.position)
         }
         this.progress++
         if (this.progress > 100) {
