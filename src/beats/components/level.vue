@@ -6,6 +6,7 @@
       :id="laser.id",
       :from="laser.from",
       :speed="laser.speed",
+      @registerEvent="pushEvent",
       @destroy="removeLaser"
     )
     beat-point(
@@ -14,6 +15,7 @@
       :id="point.id",
       :left="point.left",
       :top="point.top",
+      @registerEvent="pushEvent",
       @destroy="removePoint"
     )
 </template>
@@ -26,6 +28,7 @@
 </style>
 
 <script>
+import EventBus from '@/common/utils/EventBus'
 import Laser from './laser'
 import BeatPoint from './beat-point'
 
@@ -50,7 +53,8 @@ export default {
       laserId: 1,
       pointId: 1,
       activeLasers: [],
-      activePoints: []
+      activePoints: [],
+      eventsManager: []
     }
   },
   watch: {
@@ -117,7 +121,20 @@ export default {
       this.activePoints = this.activePoints.filter(point => point.id !== id)
     },
     finishLevel () {
+      this.clearEvents()
       this.$emit('complete')
+    },
+    pushEvent (eventId) {
+      this.eventsManager.push(eventId)
+    },
+    /**
+     * 每关结束后清除本关注册的事件
+     */
+    clearEvents () {
+      this.eventsManager.forEach(eventId => {
+        EventBus.$destroy(eventId)
+      })
+      this.eventsManager = []
     }
   }
 }

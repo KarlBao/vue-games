@@ -1,6 +1,4 @@
 <template lang="jade">
-  //- top: laserDirection === 'v' ? 0 : progress+'%', left: laserDirection === 'h' ? 0 : progress+'%'
-  //- transitionDuration: 100/speed+'s'
   div.laser(
     :class="[laserDirection === 'v' ? 'vertical' : 'horizontal', start ? 'animating' : '', 'from-'+from]",
     :style="{top: laserDirection === 'v' ? 0 : position+'%', left: laserDirection === 'h' ? 0 : position+'%'}"
@@ -13,8 +11,6 @@
   background-color: #d50000
   z-index: 1
   transition: all .05s linear
-  // transition-property: all
-  // transition-timing-function: linear
   &.vertical
     margin-left: -1px
     width: 3px
@@ -23,10 +19,6 @@
     margin-top: -1px
     height: 5px
     width: 100%
-  // &.from-left
-  //   left: 0
-  //   &.animating
-  //     left: 100%
 </style>
 
 <script>
@@ -54,7 +46,7 @@
         start: false,
         fps: 30, // 动画帧率
         then: 0,
-        freeze: false // 冻结
+        speedRate: 1 // 速度倍率
       }
     },
     computed: {
@@ -84,6 +76,7 @@
     },
     mounted () {
       this.init()
+      this.registerEvents()
     },
     methods: {
       init () {
@@ -93,6 +86,16 @@
         setTimeout(() => {
           this.start = true
         }, 1)
+      },
+      registerEvents () {
+        // 改变激光移动速率，负数反向移动
+        // 当id !== null 时，只对特定id的激光起作用
+        // 否则对所有起作用
+        EventBus.$on('changeLaserSpeedRate', (speedRate, id = null) => {
+          if (id !== null && id !== this.id) { return }
+          this.speedRate = speedRate
+        })
+        this.$emit('registerEvent', 'changeLaserSpeedRate')
       },
       animate () {
         this.animId = requestAnimationFrame(this.animate)
@@ -105,11 +108,8 @@
         }
       },
       playFrame () {
-        if (this.freeze) {
-          return
-        }
-        const frameProgress = this.speed / this.fps
-        this.progress = this.progress + frameProgress
+        const frameProgress = this.speed * this.speedRate / this.fps
+        this.progress = this.progress + frameProgress > 0 ? (this.progress + frameProgress) : 0
         if (this.progress > 100) {
           this.destroy()
         }

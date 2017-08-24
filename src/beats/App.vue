@@ -5,16 +5,17 @@
     div.score-ctnr
       span SCORE : 
       span {{ score }}
-    mu-raised-button.start-btn(v-if="!started", label="PLAY", @click="start", secondary)
+    powerups.powerups(v-if="status === 1")
+    mu-raised-button.start-btn(v-if="status === 0", label="PLAY", @click="start", secondary)
     level(
-      v-if="started && level && !gameover",
+      v-if="level && status === 1",
       :level-num="currentLevel",
       :num-of-points="level.points",
       :lasers="level.lasers",
       @complete="nextLevel"
     )
     mu-dialog(
-      :open="gameover || !level",
+      :open="status === 2",
       title="Game Over"
     )
       span YOUR SCORE: {{ score }}
@@ -50,19 +51,29 @@
   margin-top: -35px
   margin-left: -100px
   font-size: 24px
+.powerups
+  position: absolute
+  top: 0
+  right: 20px
 </style>
 
 <script>
+import Powerups from './components/powerups'
 import Level from './components/level'
 export default {
   name: 'app',
   data () {
     return {
-      started: false,
-      currentLevel: 1
+      started: false
     }
   },
   computed: {
+    status () {
+      return this.$store.getters.getGameStatus
+    },
+    currentLevel () {
+      return this.$store.getters.getCurrentLevelNum
+    },
     level () {
       return this.$store.getters.getLevels[this.currentLevel] || undefined
     },
@@ -71,23 +82,32 @@ export default {
     },
     score () {
       return this.$store.getters.getScore
-    },
-    gameover () {
-      return this.hearts === 0
+    }
+  },
+  watch: {
+    hearts (n) {
+      if (n <= 0) {
+        this.gameOver()
+      }
     }
   },
   components: {
+    Powerups,
     Level
   },
   methods: {
     nextLevel () {
-      this.currentLevel++
+      this.$store.dispatch('nextLevel')
     },
     start () {
-      this.started = true
-      this.currentLevel = 1
+      this.$store.dispatch('startGame')
+      this.$store.dispatch('resetLevel')
       this.$store.dispatch('fillHearts')
       this.$store.dispatch('clearScore')
+      this.$store.dispatch('setPowerupNum', {powerup: 'freeze', num: 2})
+    },
+    gameOver () {
+      this.$store.dispatch('gameOver')
     }
   }
 }

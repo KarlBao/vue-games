@@ -80,12 +80,17 @@ transition(:name="transitionName")
     },
     methods: {
       init () {
+        this.registerEvents()
+      },
+      registerEvents () {
         this.events.laserX = EventBus.$once('laserX' + this.left, () => {
           this.onLaserTouch()
         })
         this.events.laserY = EventBus.$once('laserY' + this.top, () => {
           this.onLaserTouch()
         })
+        this.$emit('registerEvent', 'laserX' + this.left)
+        this.$emit('registerEvent', 'laserY' + this.top)
       },
       onLaserTouch () {
         if (this.show) {
@@ -110,9 +115,6 @@ transition(:name="transitionName")
         this.$store.dispatch('addScore', 1)
       },
       destroy () {
-        // Object.keys(this.events).forEach(event => {
-        //   EventBus.$off(this.events[event])
-        // })
         this.$nextTick(() => {
           this.$emit('destroy', this.id)
         })

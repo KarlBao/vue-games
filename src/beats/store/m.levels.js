@@ -130,24 +130,37 @@ const levels = {
 }
 
 const types = {
-  GET_LEVEL: 'getLevel'
+  NEXT_LEVEL: 'nextLevel',
+  RESET_LEVEL: 'resetLevel'
 }
 
 const store = {
-  state: levels,
+  state: {
+    levels: levels,
+    currentLevel: 1
+  },
   mutations: {
-    [types.GET_LEVEL] (state, n) {
-      return state[n]
+    [types.NEXT_LEVEL] (state) {
+      state.currentLevel++
+    },
+    [types.RESET_LEVEL] (state) {
+      state.currentLevel = 1
     }
   },
   actions: {
-    getLevel ({ commit }, levelNum) {
-      commit(types.GET_LEVEL, levelNum)
+    nextLevel ({ commit }) {
+      commit(types.NEXT_LEVEL)
+    },
+    resetLevel ({commit}) {
+      commit(types.RESET_LEVEL)
     }
   },
   getters: {
     getLevels (state) {
-      return state
+      return state.levels
+    },
+    getCurrentLevelNum (state) {
+      return state.currentLevel
     }
   }
 }
