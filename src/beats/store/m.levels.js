@@ -54,12 +54,12 @@ const levels = {
   5: new Level({
     lasers: [
       new Laser({
-        from: 'bottom',
-        speed: 15
+        from: 'right',
+        speed: 10
       }),
       new Laser({
         from: 'left',
-        speed: 15
+        speed: 10
       })
     ]
   }),
@@ -67,14 +67,58 @@ const levels = {
     lasers: [
       new Laser({
         from: 'top',
+        speed: 8
+      }),
+      new Laser({
+        from: 'left',
+        speed: 8
+      }),
+      new Laser({
+        from: 'right',
+        speed: 8
+      }),
+      new Laser({
+        from: 'bottom',
+        speed: 8
+      })
+    ]
+  }),
+  7: new Level({
+    points: 10,
+    lasers: [
+      new Laser({
+        from: 'right',
+        speed: 15
+      })
+    ]
+  }),
+  8: new Level({
+    points: 10,
+    lasers: [
+      new Laser({
+        from: 'bottom',
+        speed: 15
+      })
+    ]
+  }),
+  9: new Level({
+    points: 10,
+    lasers: [
+      new Laser({
+        from: 'right',
         speed: 10
       }),
       new Laser({
         from: 'left',
         speed: 10
-      }),
+      })
+    ]
+  }),
+  10: new Level({
+    points: 10,
+    lasers: [
       new Laser({
-        from: 'right',
+        from: 'top',
         speed: 10
       }),
       new Laser({
