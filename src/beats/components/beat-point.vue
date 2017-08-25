@@ -78,19 +78,17 @@ transition(:name="transitionName")
     mounted () {
       this.init()
     },
+    beforeDestroy () {
+      EventBus.$off('laserX' + this.left, this.onLaserTouch)
+      EventBus.$off('laserY' + this.top, this.onLaserTouch)
+    },
     methods: {
       init () {
         this.registerEvents()
       },
       registerEvents () {
-        this.events.laserX = EventBus.$once('laserX' + this.left, () => {
-          this.onLaserTouch()
-        })
-        this.events.laserY = EventBus.$once('laserY' + this.top, () => {
-          this.onLaserTouch()
-        })
-        this.$emit('registerEvent', 'laserX' + this.left)
-        this.$emit('registerEvent', 'laserY' + this.top)
+        this.events.laserX = EventBus.$once('laserX' + this.left, this.onLaserTouch)
+        this.events.laserY = EventBus.$once('laserY' + this.top, this.onLaserTouch)
       },
       onLaserTouch () {
         if (this.show) {

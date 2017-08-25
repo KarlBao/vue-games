@@ -78,6 +78,9 @@
       this.init()
       this.registerEvents()
     },
+    beforeDestroy () {
+      EventBus.$off('changeLaserSpeedRate', this.changeSpeedRate)
+    },
     methods: {
       init () {
         this.fps = this.speed > this.fps ? this.speed : this.fps
@@ -91,11 +94,11 @@
         // 改变激光移动速率，负数反向移动
         // 当id !== null 时，只对特定id的激光起作用
         // 否则对所有起作用
-        EventBus.$on('changeLaserSpeedRate', (speedRate, id = null) => {
-          if (id !== null && id !== this.id) { return }
-          this.speedRate = speedRate
-        })
-        this.$emit('registerEvent', 'changeLaserSpeedRate')
+        EventBus.$on('changeLaserSpeedRate', this.changeSpeedRate)
+      },
+      changeSpeedRate (speedRate, id = null) {
+        if (id !== null && id !== this.id) { return }
+        this.speedRate = speedRate
       },
       animate () {
         this.animId = requestAnimationFrame(this.animate)
