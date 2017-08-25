@@ -101,10 +101,6 @@ export default {
     },
     removeLaser (id) {
       this.activeLasers = this.activeLasers.filter(laser => laser.id !== id)
-      if (this.activeLasers.length === 0) {
-        // finish level
-        this.finishLevel()
-      }
     },
     addPoints () {
       for (let i = 0; i < this.numOfPoints; i++) {
@@ -119,6 +115,11 @@ export default {
     },
     removePoint (id) {
       this.activePoints = this.activePoints.filter(point => point.id !== id)
+      if (this.activePoints.length === 0) {
+        setTimeout(() => {
+          this.finishLevel()
+        }, 600)
+      }
     },
     finishLevel () {
       this.clearEvents()
