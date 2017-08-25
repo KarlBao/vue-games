@@ -95,10 +95,8 @@ transition(:name="transitionName")
        */
       onHit (isPositive = false) {
         if (isPositive) {
-          console.log(this.top)
           return this.tap()
-        }
-        if (this.show) {
+        } else if (this.show) {
           this.destroyedBy = 'laser'
           this.show = false
           this.destroy()

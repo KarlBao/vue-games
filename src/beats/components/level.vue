@@ -49,8 +49,12 @@ export default {
     return {
       laserId: 1,
       pointId: 1,
-      activeLasers: [],
-      activePoints: []
+      activeLasers: []
+    }
+  },
+  computed: {
+    activePoints () {
+      return this.$store.getters.getActivePoints
     }
   },
   watch: {
@@ -68,7 +72,7 @@ export default {
   methods: {
     initLevel () {
       this.activeLasers = []
-      this.activePoints = []
+      this.$store.dispatch('clearPoints')
       this.addPoints()
       this.addLasers()
     },
@@ -102,15 +106,16 @@ export default {
       for (let i = 0; i < this.numOfPoints; i++) {
         const top = Math.ceil(Math.random() * 80) + 10
         const left = Math.ceil(Math.random() * 80) + 10
-        this.activePoints.push({
+        const point = {
           id: this.pointId++,
           top: top,
           left: left
-        })
+        }
+        this.$store.dispatch('addPoint', point)
       }
     },
     removePoint (id) {
-      this.activePoints = this.activePoints.filter(point => point.id !== id)
+      this.$store.dispatch('removePoint', id)
       if (this.activePoints.length === 0) {
         setTimeout(() => {
           this.finishLevel()

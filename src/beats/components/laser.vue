@@ -62,14 +62,20 @@
       },
       frameInterval () {
         return 1000 / this.fps
+      },
+      pointsX () {
+        return this.$store.getters.getPointsX
+      },
+      pointsY () {
+        return this.$store.getters.getPointsY
       }
     },
     watch: {
       intPosition (pos) {
-        if (this.laserDirection === 'v') {
+        if (this.laserDirection === 'v' && this.pointsX.indexOf(this.intPosition) > -1) {
           EventBus.$emit('hitPointX' + this.intPosition)
         }
-        if (this.laserDirection === 'h') {
+        if (this.laserDirection === 'h' && this.pointsY.indexOf(this.intPosition) > -1) {
           EventBus.$emit('hitPointY' + this.intPosition)
         }
       }
