@@ -7,6 +7,7 @@
         span {{powerup.name}} x {{powerup.num}}
     
     freeze(name="freeze")
+    blast(name="blast")
 </template>
 
 <style lang="stylus" scoped>
@@ -18,6 +19,7 @@
 
 <script>
   import Freeze from './freeze'
+  import Blast from './blast'
   export default {
     computed: {
       powerups () {
@@ -25,7 +27,8 @@
       }
     },
     components: {
-      Freeze
+      Freeze,
+      Blast
     }
   }
 </script>

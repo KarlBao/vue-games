@@ -6,7 +6,6 @@
       :id="laser.id",
       :from="laser.from",
       :speed="laser.speed",
-      @registerEvent="pushEvent",
       @destroy="removeLaser"
     )
     beat-point(
@@ -15,7 +14,6 @@
       :id="point.id",
       :left="point.left",
       :top="point.top",
-      @registerEvent="pushEvent",
       @destroy="removePoint"
     )
 </template>

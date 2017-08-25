@@ -15,7 +15,8 @@ class Powerup {
 }
 
 const powerups = {
-  freeze: new Powerup({name: 'FREEZE', key: 'Z', keyCode: 90})
+  freeze: new Powerup({name: 'FREEZE', key: 'Z', keyCode: 90}),
+  blast: new Powerup({name: 'BLAST', key: 'X', keyCode: 88})
 }
 const types = {
   SET_POWERUPS_NUM: 'setPowerupsNum',

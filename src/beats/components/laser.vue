@@ -67,10 +67,10 @@
     watch: {
       intPosition (pos) {
         if (this.laserDirection === 'v') {
-          EventBus.$emit('laserX' + this.intPosition)
+          EventBus.$emit('hitPointX' + this.intPosition)
         }
         if (this.laserDirection === 'h') {
-          EventBus.$emit('laserY' + this.intPosition)
+          EventBus.$emit('hitPointY' + this.intPosition)
         }
       }
     },

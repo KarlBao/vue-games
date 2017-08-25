@@ -1,5 +1,5 @@
 <template lang="jade">
-  div#app
+  div#app(:style="{cursor: cursor}")
     div.heart-ctnr
       div.dp-i-block.v-middle.heart(v-for="i in hearts")
     div.score-ctnr
@@ -72,6 +72,9 @@ export default {
     status () {
       return this.$store.getters.getGameStatus
     },
+    cursor () {
+      return this.$store.getters.getCursor
+    },
     currentLevel () {
       return this.$store.getters.getCurrentLevelNum
     },
@@ -106,10 +109,14 @@ export default {
       this.$store.dispatch('resetLevel')
       this.$store.dispatch('fillHearts')
       this.$store.dispatch('clearScore')
-      this.$store.dispatch('setPowerupNum', {powerup: 'freeze', num: 2})
+      this.initPowerups()
     },
     gameOver () {
       this.$store.dispatch('gameOver')
+    },
+    initPowerups () {
+      this.$store.dispatch('setPowerupNum', {powerup: 'freeze', num: 2})
+      this.$store.dispatch('setPowerupNum', {powerup: 'blast', num: 2})
     }
   }
 }

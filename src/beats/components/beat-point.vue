@@ -79,18 +79,25 @@ transition(:name="transitionName")
       this.init()
     },
     beforeDestroy () {
-      EventBus.$off('laserX' + this.left, this.onLaserTouch)
-      EventBus.$off('laserY' + this.top, this.onLaserTouch)
+      EventBus.$off('hitPointX' + this.left, this.onHit)
+      EventBus.$off('hitPointY' + this.top, this.onHit)
     },
     methods: {
       init () {
         this.registerEvents()
       },
       registerEvents () {
-        this.events.laserX = EventBus.$once('laserX' + this.left, this.onLaserTouch)
-        this.events.laserY = EventBus.$once('laserY' + this.top, this.onLaserTouch)
+        this.events.laserX = EventBus.$once('hitPointX' + this.left, this.onHit)
+        this.events.laserY = EventBus.$once('hitPointY' + this.top, this.onHit)
       },
-      onLaserTouch () {
+      /**
+       * @param {Boolean} isPositive TRUE加分，否则减血
+       */
+      onHit (isPositive = false) {
+        if (isPositive) {
+          console.log(this.top)
+          return this.tap()
+        }
         if (this.show) {
           this.destroyedBy = 'laser'
           this.show = false
