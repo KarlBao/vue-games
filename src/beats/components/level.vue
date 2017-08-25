@@ -69,8 +69,13 @@ export default {
   mounted () {
     this.initLevel()
   },
+  beforeDestroy () {
+    // 组件销毁前清除所有本关注册的事件
+    this.clearEvents()
+  },
   methods: {
     initLevel () {
+      this.clearEvents()
       this.activeLasers = []
       this.activePoints = []
       this.addPoints()
@@ -122,18 +127,17 @@ export default {
       }
     },
     finishLevel () {
-      this.clearEvents()
       this.$emit('complete')
     },
     pushEvent (eventId) {
       this.eventsManager.push(eventId)
     },
     /**
-     * 每关结束后清除本关注册的事件
+     * 每关开始前清除之前注册的事件
      */
     clearEvents () {
       this.eventsManager.forEach(eventId => {
-        EventBus.$destroy(eventId)
+        EventBus.$off(eventId)
       })
       this.eventsManager = []
     }

@@ -58,6 +58,7 @@
 </style>
 
 <script>
+import EventBus from '@/common/utils/EventBus'
 import Powerups from './components/powerups'
 import Level from './components/level'
 export default {
@@ -100,6 +101,7 @@ export default {
       this.$store.dispatch('nextLevel')
     },
     start () {
+      EventBus.$off() // 清除所有事件绑定
       this.$store.dispatch('startGame')
       this.$store.dispatch('resetLevel')
       this.$store.dispatch('fillHearts')
