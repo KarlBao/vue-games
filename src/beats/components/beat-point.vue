@@ -78,8 +78,6 @@ transition(:name="transitionName")
       this.init()
     },
     beforeDestroy () {
-      // EventBus.$off('hitPointX' + this.left, this.onHit)
-      // EventBus.$off('hitPointY' + this.top, this.onHit)
       EventBus.$off('hitPoint', this.onHit)
     },
     methods: {
@@ -88,7 +86,6 @@ transition(:name="transitionName")
       },
       registerEvents () {
         EventBus.$on('hitPoint', this.onHit)
-        // this.events.laserY = EventBus.$once('hitPointY' + this.top, this.onHit)
       },
       /**
        * @param {Boolean} isPositive TRUE加分，否则减血
