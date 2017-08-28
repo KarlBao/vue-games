@@ -66,8 +66,7 @@ transition(:name="transitionName")
       return {
         show: true,
         destroyedBy: 'tap', // ['tap', 'laser']
-        diameter: 20, // 直径
-        events: {}
+        diameter: 20 // 直径
       }
     },
     computed: {
@@ -79,21 +78,27 @@ transition(:name="transitionName")
       this.init()
     },
     beforeDestroy () {
-      EventBus.$off('hitPointX' + this.left, this.onHit)
-      EventBus.$off('hitPointY' + this.top, this.onHit)
+      // EventBus.$off('hitPointX' + this.left, this.onHit)
+      // EventBus.$off('hitPointY' + this.top, this.onHit)
+      EventBus.$off('hitPoint', this.onHit)
     },
     methods: {
       init () {
         this.registerEvents()
       },
       registerEvents () {
-        this.events.laserX = EventBus.$once('hitPointX' + this.left, this.onHit)
-        this.events.laserY = EventBus.$once('hitPointY' + this.top, this.onHit)
+        EventBus.$on('hitPoint', this.onHit)
+        // this.events.laserY = EventBus.$once('hitPointY' + this.top, this.onHit)
       },
       /**
        * @param {Boolean} isPositive TRUE加分，否则减血
+       * @param {Object} coord 范围坐标
        */
-      onHit (isPositive = false) {
+      onHit (isPositive = false, coord = {}) {
+        if (coord.x && Number.isInteger(coord.x)) { coord.x = [coord.x, coord.x] }
+        if (coord.y && Number.isInteger(coord.y)) { coord.y = [coord.y, coord.y] }
+        coord = Object.assign({x: [0, 100], y: [0, 100]}, coord)
+        if (coord.x[0] > this.left || coord.x[1] < this.left || coord.y[0] > this.top || coord.y[1] < this.top) { return }
         if (isPositive) {
           return this.tap()
         } else if (this.show) {

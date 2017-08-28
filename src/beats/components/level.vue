@@ -66,6 +66,9 @@ export default {
     Laser,
     BeatPoint
   },
+  beforeDestroy () {
+    this.$store.dispatch('clearPoints')
+  },
   mounted () {
     this.initLevel()
   },

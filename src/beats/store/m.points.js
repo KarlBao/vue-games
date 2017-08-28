@@ -12,11 +12,13 @@ const store = {
       state.push(point)
     },
     [types.REMOVE_POINT] (state, id) {
-      state = state.filter(point => point.id !== id)
-      // state.pop()
+      const index = state.findIndex(point => point.id === id)
+      if (index > -1) {
+        state.splice(index, 1)
+      }
     },
     [types.CLEAR_POINTS] (state) {
-      state = []
+      state.splice(0, state.length)
     }
   },
   actions: {

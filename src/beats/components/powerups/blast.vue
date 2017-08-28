@@ -54,21 +54,22 @@
         diameter: 20
       }
     },
-    mounted () {
+    beforeDestroy () {
+      this.finishAnim()
     },
     methods: {
       usePowerup () {
-        if (this.isLocked) { return false }
+        if (this.isLocked || this.isBlasting) { return false }
         this.isLocked = true
-        document.addEventListener('mousedown', this.activatePowerup, false)
+        document.addEventListener('mousedown', this.activatePowerup)
         this.$store.dispatch('setCursor', 'crosshair')
       },
       activatePowerup (e) {
-        document.removeEventListener('mousedown', this.activatePowerup, false)
+        document.removeEventListener('mousedown', this.activatePowerup)
         this.$store.dispatch('setCursor', 'default')
         this.blastTop = (this.getMousePosition(e) - (this.diameter / 2))
         this.isBlasting = true
-        setTimeout(this.ruinPoints, 1000)
+        setTimeout(this.ruinPoints, 800)
       },
       getMousePosition (e) {
         const topOffset = e.clientY
@@ -76,11 +77,9 @@
         return Math.floor((topOffset / windowHeight) * 100)
       },
       ruinPoints () {
-        const minY = Math.floor(this.blastTop - (this.diameter / 2))
-        const maxY = Math.ceil(this.blastTop + (this.diameter / 2))
-        for (let y = minY; y <= maxY; y++) {
-          EventBus.$emit('hitPointY' + parseInt(y), true)
-        }
+        const minY = Math.floor(this.blastTop)
+        const maxY = Math.ceil(this.blastTop + this.diameter)
+        EventBus.$emit('hitPoint', true, {y: [minY, maxY]})
         setTimeout(this.finishAnim, 2000)
       },
       finishAnim () {
