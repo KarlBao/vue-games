@@ -1,0 +1,8 @@
+{
+  "name": "王の盛邀",
+  "title": "kings-invitation",
+  "author": "Karl",
+  "entry": "index.js",
+  "template": "index.jade",
+  "distPath": "index.html"
+}
