@@ -7,6 +7,7 @@ html
         margin: 0;
       }
       .project-link {
+        position: relative;
         display: inline-block;
         vertical-align: middle;
         width: 250px;
@@ -18,19 +19,41 @@ html
         background-image: -webkit-linear-gradient(left top, #00fff3, #00ffdc);
         background-image: -moz-linear-gradient(left top, #00fff3, #00ffdc);
         background-image: linear-gradient(to right bottom, #00fff3, #00ffdc);
+        box-shadow: 6px 6px 5px #888;
         color: #555;
         font-size: 25px;
         text-decoration: none;
         text-align: center;
+        transition: background-image .3s ease-in-out;
+        transform: scale(1,1);
+        transition: transform .5s ease-in-out;
       }
-      .project-link:before {
+      .project-link:hover {
+        transform: scale(1.1,1.1);
+      }
+      .project-link .name {
+        height: 100%;
+      }
+      .project-link .name:before {
         content: '';
         height: 100%;
         display: inline-block;
         vertical-align: middle;
       }
+      .project-link .author {
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+        height: 20px;
+        font-size: 12px;
+        line-height: 20px;
+        text-align: right;
+        color: #aaa
+      }
 
   body
     div#app
       each config, name in htmlWebpackPlugin.options.availableProjects
-        a.project-link(href="#{config.filename}") #{name}
+        a.project-link(href="#{config.filename}") 
+          div.name #{name}
+          div.author by @#{config.author}
