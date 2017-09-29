@@ -8,7 +8,9 @@
 
 <style lang="stylus" scoped>
   .dialog
-    position: relative
+    position: fixed
+    left: 10%
+    bottom: 40px
     width: 800px
     height: 170px
     padding: 20px

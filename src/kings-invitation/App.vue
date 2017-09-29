@@ -1,6 +1,5 @@
 <template lang="jade">
   div#app
-    img(src="./assets/logo.png")
     scene(:index="sceneIndex")
 </template>
 
