@@ -21,6 +21,7 @@
     width: 100%
     height: 100%
     background-color: #000
+    transition: opacity 5s ease-in-out
   .bg
     position: fixed
     top: 0
@@ -35,7 +36,6 @@
   
   .fade-in-enter
     opacity: 0
-    transition: opacity 3s ease-in-out
   .fade-in-enter-to
     opacity: 1
 </style>
