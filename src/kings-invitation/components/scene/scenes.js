@@ -1,11 +1,8 @@
 import DIALOG_TYPE from './../dialog/type'
+import ROULETTE_AREA_TYPE from './../roulette/type'
 
 const SPEAKERS = {
   BILI: '比利王'
-}
-const ROULETTE = {
-  SUCCESS: 1,
-  FAIL: 0
 }
 
 class Dialog {
@@ -51,7 +48,7 @@ const scenes = [
         text: '转动这个转盘，如果停在正确的区域，就能帮我脱衣服哦~~',
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
-          return area.type === ROULETTE.SUCCESS ? 1 : 2
+          return area.type === ROULETTE_AREA_TYPE.SUCCESS ? 1 : 2
         }
       })
     ]
@@ -70,7 +67,7 @@ const scenes = [
         text: '再帮我脱一件吧',
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
-          return area.type === ROULETTE.SUCCESS ? 3 : 2
+          return area.type === ROULETTE_AREA_TYPE.SUCCESS ? 3 : 2
         }
       })
     ]
@@ -94,7 +91,7 @@ const scenes = [
         speed: 150,
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
-          return area.type === ROULETTE.SUCCESS ? 3 : 4
+          return area.type === ROULETTE_AREA_TYPE.SUCCESS ? 3 : 4
         }
       })
     ]
@@ -113,7 +110,7 @@ const scenes = [
         text: '再次转动转盘，继续帮我脱吧~ ♥',
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
-          return area.type === ROULETTE.SUCCESS ? 5 : 2
+          return area.type === ROULETTE_AREA_TYPE.SUCCESS ? 5 : 2
         }
       })
     ]

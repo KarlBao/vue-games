@@ -1,3 +1,5 @@
+import TYPES from './types'
+
 /**
  * 转盘各区域对应信息
  * @key 起始角度, 0 - 359
@@ -5,16 +7,16 @@
  */
 const areas = {
   0: {
-    type: 0
+    type: TYPES.FAIL
   },
   90: {
-    type: 1
+    type: TYPES.SUCCESS
   },
   180: {
-    type: 0
+    type: TYPES.FAIL
   },
   270: {
-    type: 1
+    type: TYPES.SUCCESS
   }
 }
 
