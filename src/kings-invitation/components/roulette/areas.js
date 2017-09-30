@@ -1,4 +1,4 @@
-import TYPES from './types'
+import TYPES from './type'
 
 /**
  * 转盘各区域对应信息
