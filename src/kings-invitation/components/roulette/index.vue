@@ -2,6 +2,10 @@
   div.roulette-ctnr
     div.roulette-panel
       div.roulette(:style="{transform: 'rotate('+angle+'deg)'}")
+        div.area.success 脱
+        div.area.fail 穿
+        div.area.fail 穿
+        div.area.success 脱
       div.pointer
       mu-raised-button.btn(v-if="curStatus === STATUS.READY", label="转动", secondary, @click.native="play")
       mu-raised-button.btn(v-if="curStatus === STATUS.PLAYING", label="停下", secondary, @click.native="stop")
@@ -10,12 +14,12 @@
 
 <style lang="stylus" scoped>
   .roulette-ctnr
-    position: fixed
+    position: absolute
     top: 0
     left: 0
     width: 100%
     height: 100%
-    background-color: rgba(0,0,0,.2)
+    background-color: rgba(0,0,0,.4)
     text-align: center
     z-index: 999
     &:before
@@ -26,6 +30,7 @@
       height: 100%
       margin-left: -.25em
   .roulette-panel
+    position: relative
     display: inline-block
     vertical-align: middle
   .roulette
@@ -33,12 +38,23 @@
     height: 150px
     margin-bottom: 20px
     background-color: #888
+    .area
+      float: left
+      width: 50%
+      height: 50%
+      padding-top: 20px
+      font-size: 24px
+      color: #fff
+      &.success
+        background-color: green
+      &.fail
+        background-color: red
   .pointer
     position: absolute
-    top: 74px
-    left: 75px
-    width: 20px
-    height: 3px
+    top: 55px
+    left: 74px
+    width: 3px
+    height: 20px
     background-color: #fff
 </style>
 
@@ -84,7 +100,7 @@
       },
       getAreaStartAngle () {
         const matchArr = Object.keys(areas)
-        const angle = this.angle % 360
+        const angle = 360 - (this.angle % 360)
         const matchedAngles = matchArr.filter(ele => ele <= angle)
         return matchedAngles[matchedAngles.length - 1]
       }

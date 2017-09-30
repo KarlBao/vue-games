@@ -5,16 +5,16 @@
  */
 const areas = {
   0: {
-    type: 1
+    type: 0
   },
   90: {
-    type: 0
-  },
-  180: {
     type: 1
   },
-  270: {
+  180: {
     type: 0
+  },
+  270: {
+    type: 1
   }
 }
 

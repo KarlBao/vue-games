@@ -1,6 +1,7 @@
 const types = {
   SHOW_PREV_SCENE: 'showPrevScene',
-  SHOW_NEXT_SCENE: 'showNextScene'
+  SHOW_NEXT_SCENE: 'showNextScene',
+  SHOW_SCENE: 'showScene'
 }
 
 const store = {
@@ -15,6 +16,9 @@ const store = {
     },
     [types.SHOW_NEXT_SCENE] (state) {
       state.sceneIndex++
+    },
+    [types.SHOW_SCENE] (state, i) {
+      state.sceneIndex = i
     }
   },
   actions: {
@@ -23,6 +27,9 @@ const store = {
     },
     showNextScene ({commit}) {
       commit(types.SHOW_NEXT_SCENE)
+    },
+    showScene ({commit}, index) {
+      commit(types.SHOW_SCENE, index)
     }
   },
   getters: {

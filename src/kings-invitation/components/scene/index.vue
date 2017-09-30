@@ -1,11 +1,12 @@
 <template lang="jade">
   div.scene(@click="handleSceneClick")
-    div.background(:style="{backgroundImage: bgUrl}")
+    div.background(:style="{backgroundImage: 'url(' + bgUrl + ')'}")
     div.character(:style="{backgroundImage: charUrl}")
     roulette(v-if="rouletteShown", @complete="handleArea")
     dialog-box(
       :text="dialog.text",
       :speed="dialog.speed",
+      :speaker="dialog.speaker",
       :has-next="hasNextDialog",
       @complete="dialogPlaying = false",
       @start="dialogPlaying = true"
@@ -15,6 +16,14 @@
 <style lang="stylus" scoped>
   .scene
     position: fixed
+    top: 50%
+    left: 50%
+    width: 800px
+    height: 600px
+    margin-left: -400px
+    margin-top: -300px
+  .background
+    position: absolute
     top: 0
     left: 0
     width: 100%
@@ -72,18 +81,28 @@
         this.rouletteShown = false
       },
       handleSceneClick () {
-        if (this.dialogPlaying) {
-          return
+        if (!this.dialogPlaying) {
+          this.handleDialog()
         }
-
-        if (this.hasNextDialog) {
-          this.showNextDialog()
-        } else {
-          this.showRoulette()
+      },
+      handleDialog () {
+        const dialogType = this.dialog.type
+        switch (dialogType) {
+          case 'normal':
+            this.showNextDialog()
+            break
+          case 'roulette':
+            this.showRoulette()
+            break
+          case 'gameover':
+            this.$emit('gameover')
+            break
         }
       },
       showNextDialog () {
-        this.dialogIndex++
+        if (this.hasNextDialog) {
+          this.dialogIndex++
+        }
       },
       showRoulette () {
         this.rouletteShown = true
@@ -93,11 +112,14 @@
       },
       handleArea (area) {
         this.hideRoulette()
-        console.log(area.type)
-        if (area.type === 0) {
-          this.$store.dispatch('showPrevScene')
+        const nextScene = this.dialog.handleRoulette(area)
+        this.changeScene(nextScene)
+      },
+      changeScene (index) {
+        if (index === undefined || index === false) {
+          this.showNextDialog()
         } else {
-          this.$store.dispatch('showNextScene')
+          this.$store.dispatch('showScene', index)
         }
       }
     }
