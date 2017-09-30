@@ -94,7 +94,7 @@ const scenes = [
         speed: 150,
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
-          return area.type === ROULETTE.SUCCESS ? 3 : 4
+          return area.type === ROULETTE.SUCCESS ? 3 : 2
         }
       })
     ]
