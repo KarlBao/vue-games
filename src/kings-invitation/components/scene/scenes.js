@@ -107,7 +107,7 @@ const scenes = [
       }),
       new Dialog({
         speaker: SPEAKERS.BILI,
-        text: '再次转动转盘，继续帮我脱吧~ ♥',
+        text: '♥ 再次转动转盘，继续帮我脱吧~ ♥',
         type: DIALOG_TYPE.ROULETTE,
         handleRoulette: (area) => {
           return area.type === ROULETTE_AREA_TYPE.SUCCESS ? 5 : 2
@@ -138,11 +138,11 @@ const scenes = [
     dialogs: [
       new Dialog({
         speaker: SPEAKERS.BILI,
-        text: 'Ohh~~你好像发现了王の真相'
+        text: 'Ohh~~你好像发现了王の真相~'
       }),
       new Dialog({
         speaker: SPEAKERS.BILI,
-        text: '让我们去格斗室一起探讨一下哲学吧',
+        text: '让我们去格斗室一起探讨一下哲学吧。',
         type: DIALOG_TYPE.GAMEOVER
       })
     ]
